@@ -40,6 +40,7 @@ def processRequest(req):
     if yql_query is None:
         return {}
     print("Before url encoding")
+    print("Encoding some dumb thing: " + urllib.urlencode("test"))
     yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
     print("After url encoding")
     print(yql_url)
