@@ -30,7 +30,8 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
+#    if req.get("result").get("action") != "yahooWeatherForecast":
+    if req["result"]["action"] != "yahooWeatherForecast":
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = makeYqlQuery(req)
@@ -49,9 +50,9 @@ def processRequest(req):
 
 
 def makeYqlQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    city = parameters.get("geo-city")
+    result = req["result"]
+    parameters = result["parameters"]
+    city = parameters["geo-city"]
     if city is None:
         return None
 
@@ -59,32 +60,32 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
-    query = data.get('query')
+    query = data['query']
     if query is None:
         return {}
 
-    result = query.get('results')
+    result = query['results']
     if result is None:
         return {}
 
-    channel = result.get('channel')
+    channel = result['channel']
     if channel is None:
         return {}
 
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
+    item = channel['item']
+    location = channel['location']
+    units = channel['units']
     if (location is None) or (item is None) or (units is None):
         return {}
 
-    condition = item.get('condition')
+    condition = item['condition']
     if condition is None:
         return {}
 
     # print(json.dumps(item, indent=4))
 
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+    speech = "Today in " + location['city'] + ": " + condition['text'] + \
+             ", the temperature is " + condition['temp'] + " " + units['temperature']
 
     print("Response:")
     print(speech)
