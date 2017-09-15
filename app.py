@@ -53,9 +53,9 @@ def processRequest(req):
 
 def makeYqlQuery(req):
     result = req["result"]
-    print("In makeYqlQuery: Result: " + result)
     parameters = result["parameters"]
     city = parameters["geo-city"]
+    print("In makeYqlQuery: City: " + city)
     if city is None:
         return None
 
