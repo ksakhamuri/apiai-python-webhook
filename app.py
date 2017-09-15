@@ -39,7 +39,9 @@ def processRequest(req):
     print("Yahoo Query:" + yql_query)
     if yql_query is None:
         return {}
+    print("Before url encoding")
     yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
+    print("After url encoding")
     print(yql_url)
 
     result = urllib.urlopen(yql_url).read()
